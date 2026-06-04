@@ -37,8 +37,8 @@ function OrderDetails() {
         <div className="card p-3 mb-3">
 
           <h5>Order ID: {order.orderid}</h5>
-          <p>Total: ₹{order.total}</p>
-          <p>Status: {order.status}</p>
+          <p>Total: ₹{order.grand_total }</p>
+          <p>Status:Paid</p>
 
         </div>
       )}
@@ -52,17 +52,17 @@ function OrderDetails() {
     <div className="card p-2">
 
       <img
-        src={item?.image_url || item?.image || "https://via.placeholder.com/150"}
-        alt={item?.itemname || "Product"}
+        src={item?.item_image || item?.item._image || "https://via.placeholder.com/150"}
+        alt={item?.item_name || "Product"}
         className="img-fluid"
       />
 
-      <h6>{item?.itemname || item?.name}</h6>
+      <h6>{item?.item_name || item?.item_name}</h6>
 
-      <p>Qty: {item?.quantity}</p>
+      <p>Qty: {item?.item_quantity}</p>
 
       <p>
-        Price: ₹{item?.price || item?.amount || "N/A"}
+        Price: ₹{item?.item_price || item?.subtotal || "N/A"}
       </p>
 
     </div>
