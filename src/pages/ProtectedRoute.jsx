@@ -1,11 +1,13 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children }) {
+  const admin = JSON.parse(
+    localStorage.getItem("admin") || "{}"
+  );
 
-  const admin = localStorage.getItem("admin");
-
-  return admin ? children : <Navigate to="/login" replace />;
+  return admin?.adminemail
+    ? children
+    : <Navigate to="/login" replace />;
 }
 
 export default ProtectedRoute;

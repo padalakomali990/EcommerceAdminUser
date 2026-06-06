@@ -126,7 +126,7 @@ function UserDashboard() {
 
           <button
             className="dashboard-btn mt-4"
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/produce")}
           >
             Browse Products
           </button>

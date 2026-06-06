@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -56,15 +59,15 @@ function Login() {
           : "https://ecomflask.duckdns.org/api/user/login";
 
       const payload =
-  role === "admin"
-    ? {
-        email: formData.email,
-        password: formData.password
-      }
-    : {
-        email: formData.email,
-        password: formData.password
-      };
+        role === "admin"
+          ? {
+            email: formData.email,
+            password: formData.password
+          }
+          : {
+            email: formData.email,
+            password: formData.password
+          };
       console.log("Role:", role);
       console.log("Payload:", payload);
       console.log("URL:", url);
@@ -83,12 +86,21 @@ function Login() {
         "success"
       );
 
-      if (role === "admin") {
-        localStorage.setItem(
-          "admin",
-          JSON.stringify(res.data.admin)
-        );
-      } else {
+     const adminData = res.data.admin;
+
+if (role === "admin") {
+  localStorage.setItem(
+    "admin",
+    JSON.stringify(adminData)
+  );
+
+  console.log(
+    "Stored Admin:",
+    JSON.parse(localStorage.getItem("admin"))
+  );
+
+  navigate("/dashboard");
+}else {
         localStorage.setItem(
           "user",
           JSON.stringify(res.data.user)
@@ -116,16 +128,16 @@ function Login() {
       );
     }
   }
-    return (
-      <>
-        {/* BOOTSTRAP 5 */}
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-        />
+  return (
+    <>
+      {/* BOOTSTRAP 5 */}
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
 
-        {/* CUSTOM STYLE */}
-        <style>{`
+      {/* CUSTOM STYLE */}
+      <style>{`
         .login-page{
           min-height: 100vh;
           background: #f1f5f9;
@@ -217,130 +229,140 @@ function Login() {
         }
       `}</style>
 
-        {/* TOAST */}
+      {/* TOAST */}
 
-        {
-          showToast && (
-            <div
-              className={`toast show align-items-center text-white bg-${toastType} border-0 custom-toast`}
-              role="alert"
-            >
-              <div className="d-flex">
+      {
+        showToast && (
+          <div
+            className={`toast show align-items-center text-white bg-${toastType} border-0 custom-toast`}
+            role="alert"
+          >
+            <div className="d-flex">
 
-                <div className="toast-body">
-                  {toastMessage}
-                </div>
-
-                <button
-                  type="button"
-                  className="btn-close btn-close-white me-2 m-auto"
-                  onClick={() => setShowToast(false)}
-                ></button>
-
-              </div>
-            </div>
-          )
-        }
-
-        <div className="login-page">
-
-          <div className="login-card">
-
-            <h1 className="login-title">
-              {role === "admin"
-                ? "Admin Login"
-                : "User Login"}
-            </h1>
-            <div className="mb-4">
-              <label className="form-label d-block">
-                Login As
-              </label>
-
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={role === "user"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <label className="form-check-label">
-                  User
-                </label>
-              </div>
-
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="role"
-                  value="admin"
-                  checked={role === "admin"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <label className="form-check-label">
-                  Admin
-                </label>
-              </div>
-            </div>
-            <form onSubmit={handleSubmit}>
-
-              <div className="mb-3">
-
-                <label className="form-label">
-                  Email Address
-                </label>
-
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  placeholder="Enter Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-
-              </div>
-
-              <div className="mb-4">
-
-                <label className="form-label">
-                  Password
-                </label>
-
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  placeholder="Enter Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-
+              <div className="toast-body">
+                {toastMessage}
               </div>
 
               <button
-                type="submit"
-                className="login-btn"
-              >
-                Login
-              </button>
+                type="button"
+                className="btn-close btn-close-white me-2 m-auto"
+                onClick={() => setShowToast(false)}
+              ></button>
 
-            </form>
+            </div>
+          </div>
+        )
+      }
 
-            <div className="register-link">
-              Don’t have an account?{" "}
-              <Link to="/register">
-                Register
-              </Link>
+      <div className="login-page">
+
+        <div className="login-card">
+
+          <h1 className="login-title">
+            {role === "admin"
+              ? "Admin Login"
+              : "User Login"}
+          </h1>
+          <div className="mb-4">
+            <label className="form-label d-block">
+              Login As
+            </label>
+
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="role"
+                value="user"
+                checked={role === "user"}
+                onChange={(e) => setRole(e.target.value)}
+              />
+              <label className="form-check-label">
+                User
+              </label>
             </div>
 
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="role"
+                value="admin"
+                checked={role === "admin"}
+                onChange={(e) => setRole(e.target.value)}
+              />
+              <label className="form-check-label">
+                Admin
+              </label>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit}>
+
+            <div className="mb-3">
+
+              <label className="form-label">
+                Email Address
+              </label>
+
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                placeholder="Enter Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+
+            </div>
+
+            <div className="mb-4">
+
+              <label className="form-label">
+                Password
+              </label>
+
+             <div className="input-group">
+      <input
+        type={showPassword ? "text" : "password"}
+        className="form-control"
+        name="password"
+        placeholder="Enter Password"
+        value={formData.password}
+        onChange={handleChange}
+      />
+
+      <span
+        className="input-group-text bg-primary text-white"
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <FaEyeSlash /> : <FaEye />}
+      </span>
+    </div>
+
+            </div>
+
+            <button
+              type="submit"
+              className="login-btn"
+            >
+              Login
+            </button>
+
+          </form>
+
+          <div className="register-link">
+            Don’t have an account?{" "}
+            <Link to="/register">
+              Register
+            </Link>
           </div>
 
         </div>
-      </>
-    );
-  }
 
-  export default Login;
+      </div>
+    </>
+  );
+}
+
+export default Login;

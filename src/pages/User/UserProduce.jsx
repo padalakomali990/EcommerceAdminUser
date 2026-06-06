@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function UserProduce() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showFull, setShowFull] = useState(false);
   const navigate = useNavigate();
   async function fetchProducts() {
     try {
@@ -87,10 +88,25 @@ function UserProduce() {
 
               <div className="card-body">
 
-                <h5 className="card-title">
+                <style>
+                  {
+                    `
+      .card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+      `
+                  }
+                </style>
+
+                <h5
+                  className={showFull ? "" : "card-title"}
+                  onClick={() => setShowFull(!showFull)}
+                  style={{ cursor: "pointer" }}
+                >
                   {product.itemname}
                 </h5>
-
                 <p className="card-text">
                   {product.category}
                 </p>
@@ -107,19 +123,19 @@ function UserProduce() {
                 >
                   Add To Cart
                 </button>
-               <button
-  className="btn btn-success w-100 mt-2"
-  onClick={() =>
-    navigate("/payment", {
-      state: {
-        itemid: product.itemid,
-        quantity: 1
-      }
-    })
-  }
->
-  Buy Now
-</button>
+                <button
+                  className="btn btn-success w-100 mt-2"
+                  onClick={() =>
+                    navigate("/payment", {
+                      state: {
+                        itemid: product.itemid,
+                        quantity: 1
+                      }
+                    })
+                  }
+                >
+                  Buy Now
+                </button>
 
               </div>
 

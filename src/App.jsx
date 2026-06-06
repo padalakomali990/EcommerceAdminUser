@@ -164,23 +164,23 @@ function App() {
         />
 
 
-<Route
-  path="/my-orders"
-  element={
-    <UserProtectedRoute>
-      <MyOrders />
-    </UserProtectedRoute>
-  }
-/>
+        <Route
+          path="/my-orders"
+          element={
+            <UserProtectedRoute>
+              <MyOrders />
+            </UserProtectedRoute>
+          }
+        />
 
-<Route
-  path="/order/:orderid"
-  element={
-    <UserProtectedRoute>
-      <OrderDetails />
-    </UserProtectedRoute>
-  }
-/>
+        <Route
+          path="/order/:orderid"
+          element={
+            <UserProtectedRoute>
+              <OrderDetails />
+            </UserProtectedRoute>
+          }
+        />
       </Routes>
 
 

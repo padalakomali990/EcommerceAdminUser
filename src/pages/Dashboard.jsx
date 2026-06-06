@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function UserDashboard() {
+function Dashboard() {
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+ 
+const admin = JSON.parse(
+  localStorage.getItem("admin") || "{}"
+);
 
   return (
     <>
@@ -76,14 +79,14 @@ function UserDashboard() {
             User Dashboard
           </h1>
 
-          <h3 className="welcome-text">
-            Welcome: {user?.useremail}
-          </h3>
 
-          <p className="user-info mt-3">
-            <strong>Name:</strong> {user?.username}
-          </p>
+<h3 className="welcome-text">
+  Welcome: {admin?.adminemail}
+</h3>
 
+<p className="user-info mt-3">
+  <strong>Name:</strong> {admin?.adminname}
+</p>
           <button
             className="dashboard-btn mt-4"
             onClick={() => navigate("/products")}
@@ -97,4 +100,4 @@ function UserDashboard() {
   );
 }
 
-export default UserDashboard;
+export default Dashboard;

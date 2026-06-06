@@ -100,7 +100,7 @@ useEffect(() => {
     {admin && (
       <>
         <li className="nav-item">
-          <Link className="nav-link custom-link" to="/user-dashboard">
+          <Link className="nav-link custom-link" to="/dashboard">
             Dashboard
           </Link>
         </li>

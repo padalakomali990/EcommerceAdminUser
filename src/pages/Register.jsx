@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 function Register() {
+  
+    const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -344,15 +348,25 @@ function Register() {
                 Password
               </label>
 
-              <input
-                type="password"
-                className="form-control"
-                name="userpassword"
-                placeholder="Enter password"
-                value={formData.userpassword}
-                onChange={handleChange}
-                required
-              />
+             <div className="input-group">
+      <input
+        type={showPassword ? "text" : "password"}
+        className="form-control"
+        name="userpassword"
+        placeholder="Enter password"
+        value={formData.userpassword}
+        onChange={handleChange}
+        required
+      />
+
+      <span
+        className="input-group-text bg-dark text-light"
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <FaEyeSlash /> : <FaEye />}
+      </span>
+    </div>
             </div>
 
             {/* USER ONLY FIELDS */}
