@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
@@ -14,8 +14,7 @@ function Cart() {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://127.0.0.1:5000/api/cart/view",
-        { withCredentials: true }
+        "/api/cart/view",
       );
       setCartItems(res.data.cart_items || []);
       setSummary(res.data.summary);
@@ -37,9 +36,8 @@ function Cart() {
     if (quantity <= 0) return;
     try {
       await axios.put(
-        "http://127.0.0.1:5000/api/cart/update",
+        "/api/cart/update",
         { itemid, quantity },
-        { withCredentials: true }
       );
       fetchCart();
     } catch (error) {
@@ -50,8 +48,7 @@ function Cart() {
   async function removeItem(itemid) {
     try {
       await axios.delete(
-        `http://127.0.0.1:5000/api/cart/remove/${itemid}`,
-        { withCredentials: true }
+        `/api/cart/remove/${itemid}`,
       );
       fetchCart();
     } catch (error) {

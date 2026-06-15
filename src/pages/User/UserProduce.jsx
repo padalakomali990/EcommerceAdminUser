@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function UserProduce() {
@@ -11,19 +11,19 @@ function UserProduce() {
   const location = useLocation();
 
   const categories = [
-  { label: "All",              value: "All" },
-  { label: "Home Appliances",  value: "home_appliences" },
-  { label: "Grocery",          value: "Grocery" },
-  { label: "Fashion",          value: "Fashion" },
-  { label: "Electronics",      value: "Electronics" },
-  { label: "Sports",           value: "Sports" },
-  { label: "Toys",             value: "Toys" },
-];
+    { label: "All", value: "All" },
+    { label: "Home Appliances", value: "home_appliences" },
+    { label: "Grocery", value: "Grocery" },
+    { label: "Fashion", value: "Fashion" },
+    { label: "Electronics", value: "Electronics" },
+    { label: "Sports", value: "Sports" },
+    { label: "Toys", value: "Toys" },
+  ];
 
   async function fetchProducts() {
     try {
       const res = await axios.get(
-        "http://127.0.0.1:5000/api/products"
+        "/api/products"
       );
       const data = res.data.products || res.data;
       setProducts(data);
@@ -40,16 +40,16 @@ function UserProduce() {
   }, []);
 
   useEffect(() => {
-  const params = new URLSearchParams(location.search);
-  const cat = params.get("category");
-  if (cat) {
-    setActiveCategory(cat);
-    setFiltered(products.filter(p => p.category === cat));
-  } else {
-    setActiveCategory("All");
-    setFiltered(products);
-  }
-}, [location.search, products]);
+    const params = new URLSearchParams(location.search);
+    const cat = params.get("category");
+    if (cat) {
+      setActiveCategory(cat);
+      setFiltered(products.filter(p => p.category === cat));
+    } else {
+      setActiveCategory("All");
+      setFiltered(products);
+    }
+  }, [location.search, products]);
 
   function filterByCategory(val) {
     setActiveCategory(val);
@@ -61,11 +61,11 @@ function UserProduce() {
   }
 
   async function addToCart(itemid) {
+    console.log("----",itemid)
     try {
       const res = await axios.post(
-        "http://127.0.0.1:5000/api/cart/add",
+        "/api/cart/add",
         { itemid, quantity: 1 },
-        { withCredentials: true }
       );
       alert(res.data.message);
     } catch (error) {
@@ -353,24 +353,24 @@ function UserProduce() {
         </div>
 
         <div className="up-filter-bar">
-  {categories.map(cat => (
-    <button
-      key={cat.value}
-      className={`up-cat-btn ${activeCategory === cat.value ? "active" : ""}`}
-      onClick={() => filterByCategory(cat.value)}
-    >
-      {cat.label}
-    </button>
-  ))}
-</div>
+          {categories.map(cat => (
+            <button
+              key={cat.value}
+              className={`up-cat-btn ${activeCategory === cat.value ? "active" : ""}`}
+              onClick={() => filterByCategory(cat.value)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
 
         <div className="up-content">
           <p className="up-results-count">
-  Showing {filtered.length} product{filtered.length !== 1 ? "s" : ""}
-  {activeCategory !== "All"
-    ? ` in "${categories.find(c => c.value === activeCategory)?.label || activeCategory}"`
-    : ""}
-</p>
+            Showing {filtered.length} product{filtered.length !== 1 ? "s" : ""}
+            {activeCategory !== "All"
+              ? ` in "${categories.find(c => c.value === activeCategory)?.label || activeCategory}"`
+              : ""}
+          </p>
 
           {filtered.length === 0 ? (
             <div className="up-empty">

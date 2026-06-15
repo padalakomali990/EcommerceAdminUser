@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Payment() {
@@ -25,11 +25,10 @@ function Payment() {
 
       // STEP 1: CREATE ORDER
       const orderRes = await axios.post(
-        "http://127.0.0.1:5000/api/payment/create-order",
+        "/api/payment/create-order",
         type === "cart"
           ? { type: "cart" }
           : { type: "single", itemid, quantity },
-        { withCredentials: true }
       );
 
       const data = orderRes.data;
@@ -46,23 +45,22 @@ function Payment() {
         handler: async function (response) {
           try {
             const verifyRes = await axios.post(
-              "http://127.0.0.1:5000/api/payment/verify",
+              "/api/payment/verify",
               type === "cart"
                 ? {
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_signature: response.razorpay_signature,
-                    mode: "cart"
-                  }
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  mode: "cart"
+                }
                 : {
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_signature: response.razorpay_signature,
-                    mode: "single",
-                    itemid,
-                    quantity
-                  },
-              { withCredentials: true }
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  mode: "single",
+                  itemid,
+                  quantity
+                },
             );
 
             alert(verifyRes.data.message);
