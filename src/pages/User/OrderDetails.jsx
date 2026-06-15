@@ -15,7 +15,7 @@ function OrderDetails() {
   async function fetchOrder() {
     try {
       const res = await axios.get(
-        `https://ecomflask.duckdns.org/api/orders/${orderid}`,
+        `http://127.0.0.1:5000/api/orders/${orderid}`,
         {
           withCredentials: true
         }

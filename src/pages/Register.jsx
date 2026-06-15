@@ -83,8 +83,8 @@ function Register() {
   try {
     const url =
       role === "admin"
-        ? "https://ecomflask.duckdns.org/api/admin/register"
-        : "https://ecomflask.duckdns.org/api/user/register";
+        ? " http://127.0.0.1:5000/api/admin/register"
+        : " http://127.0.0.1:5000/api/user/register";
 
     const payload =
       role === "admin"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../store/Slices/ProductSlice";
-
+import axios from "axios";
 function Products() {
 
   const { items, loading, error } = useSelector(

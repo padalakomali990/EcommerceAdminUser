@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../api"
 
 function AddProduct() {
 
@@ -72,10 +72,8 @@ function AddProduct() {
       data.append("file", file);
 
       const res = await axios.post(
-        "https://ecomflask.duckdns.org/api/admin/add-item",
-        data,
+        "/api/admin/add-item", data,
         {
-          withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data"
           }

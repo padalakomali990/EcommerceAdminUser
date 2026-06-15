@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 export const fetchProducts=createAsyncThunk(
    "products/fetchProducts",async function(){
-   const res=await axios.get('https://ecomflask.duckdns.org/api/products')
+   const res=await axios.get('http://127.0.0.1:5000/api/products')
     console.log(res.data)
        return res.data
       
@@ -24,7 +24,9 @@ const ProductSlice=createSlice({
             state.items=action.payload.products
         })
          builder.addCase(fetchProducts.rejected,(state,action)=>{
-            state.loading=false
+            // state.loading=false
+            console.log("REAL ERROR:", action.error)
+
             state.error="Failed to Fetch"
         })
     }

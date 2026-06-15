@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../api"
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -55,8 +55,8 @@ function Login() {
     try {
       const url =
         role === "admin"
-          ? "https://ecomflask.duckdns.org/api/admin/login"
-          : "https://ecomflask.duckdns.org/api/user/login";
+          ? "/api/admin/login"
+          : "/api/user/login";
 
       const payload =
         role === "admin"
@@ -74,36 +74,41 @@ function Login() {
       const res = await axios.post(
         url,
         payload,
-        {
-          withCredentials: true
-        }
+
       );
 
-      console.log(res.data);
+      console.log("??????", res.data);
 
       showBootstrapToast(
         res.data.message || "Login Successful",
         "success"
       );
+      console.log("??????001",);
 
-     const adminData = res.data.admin;
+      const adminData = {
+        adminid: res.data?.admin?.adminid,
+        adminname: res.data?.admin?.adminname,
+        adminemail: res.data?.admin?.adminemail
+      };
+      console.log("??????002",);
 
-if (role === "admin") {
-  localStorage.setItem(
-    "admin",
-    JSON.stringify(adminData)
-  );
+      if (role === "admin") {
+        localStorage.setItem(
+          "admin",
+          JSON.stringify(adminData)
+        );
 
-  console.log(
-    "Stored Admin:",
-    JSON.parse(localStorage.getItem("admin"))
-  );
+        console.log(
+          "Stored Admin:",
+          JSON.parse(localStorage.getItem("admin"))
+        );
 
-  navigate("/dashboard");
-}else {
+
+      } else {
+        const userData = res.data.user || res.data;
         localStorage.setItem(
           "user",
-          JSON.stringify(res.data.user)
+          JSON.stringify(userData)
         );
       }
 
@@ -321,24 +326,24 @@ if (role === "admin") {
                 Password
               </label>
 
-             <div className="input-group">
-      <input
-        type={showPassword ? "text" : "password"}
-        className="form-control"
-        name="password"
-        placeholder="Enter Password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  name="password"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
 
-      <span
-        className="input-group-text bg-primary text-white"
-        style={{ cursor: "pointer" }}
-        onClick={() => setShowPassword(!showPassword)}
-      >
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </span>
-    </div>
+                <span
+                  className="input-group-text bg-primary text-white"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
 
             </div>
 
