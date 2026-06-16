@@ -3,6 +3,8 @@ import axios from "../../api";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function UserProduce() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,6 +37,46 @@ function UserProduce() {
     }
   }
 
+  async function searchProducts() {
+
+    if (!searchTerm.trim()) {
+      fetchProducts();   // if empty, show all products again
+      return;
+    }
+
+    try {
+
+      setSearchLoading(true);
+
+      const res = await axios.get(
+        `/api/search?q=${searchTerm}`
+      );
+
+      console.log(res.data);
+
+      if (res.data.status === "success") {
+
+        setFiltered(res.data.items);
+
+        setActiveCategory("All");
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Search failed"
+      );
+
+    } finally {
+
+      setSearchLoading(false);
+
+    }
+  }
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -61,7 +103,7 @@ function UserProduce() {
   }
 
   async function addToCart(itemid) {
-    console.log("----",itemid)
+    console.log("----", itemid)
     try {
       const res = await axios.post(
         "/api/cart/add",
@@ -362,6 +404,46 @@ function UserProduce() {
               {cat.label}
             </button>
           ))}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "10px",
+            marginTop: "20px",
+            padding: "0 20px"
+          }}
+        >
+
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) =>
+              setSearchTerm(e.target.value)
+            }
+            style={{
+              padding: "12px",
+              width: "300px",
+              borderRadius: "10px",
+              border: "1px solid #ccc"
+            }}
+          />
+
+          <button
+            onClick={searchProducts}
+            style={{
+              padding: "12px 20px",
+              background: "#0ea5e9",
+              color: "white",
+              border: "none",
+              borderRadius: "10px"
+            }}
+          >
+            {searchLoading ? "Searching..." : "Search"}
+          </button>
+
         </div>
 
         <div className="up-content">

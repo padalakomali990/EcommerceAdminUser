@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api";
 import { useNavigate } from "react-router-dom";
 
 function MyOrders() {
@@ -15,10 +15,7 @@ function MyOrders() {
     async function fetchOrders() {
         try {
             const res = await axios.get(
-                "http://127.0.0.1:5000/api/myorders",
-                {
-                    withCredentials: true
-                }
+                "/api/myorders",                                
             );
 
             setOrders(res.data.orders || []);
