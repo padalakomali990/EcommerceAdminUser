@@ -73,7 +73,7 @@ function MyOrders() {
                                 <div className="col-3">
                                      <a
                                     className="btn btn-success btn-sm"
-                                    href={`http://127.0.0.1:5000/api/invoice/${order.orderid}`}
+                                    href={`/api/invoice/${order.orderid}`}
                                     target="_blank"
                                     rel="noreferrer"
                                 >
