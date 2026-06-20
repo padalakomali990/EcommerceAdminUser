@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api";
 import { useParams } from "react-router-dom";
 
 function SingleProduct() {
@@ -12,14 +12,14 @@ function SingleProduct() {
     try {
 
       const res = await axios.get(
-        `http://127.0.0.1:5000/api/admin/item/${id}`,
+        `/api/admin/item/${id}`,
         {
           withCredentials: true
         }
       );
 
-      setProduct(res.data.product);
-console.log(res.data.product)
+      setProduct(res.data.products);
+      console.log(res.data.products)
     } catch (error) {
       console.log(error.response?.data || error.message);
     }

@@ -45,21 +45,18 @@ function EditProduct() {
     try {
 
       const res = await axios.get(
-        `http://127.0.0.1:5000/api/admin/item/${id}`,
-        {
-          withCredentials: true
-        }
+        `/api/admin/item/${id}`,
       );
 
-      const p = res.data.product;
+      const p = res.data.products;
 
       setFormData({
-        title: p.itemname,
-        Description: p.item_desc,
-        About_item: p.item_about,
-        quantity: p.quantity,
-        price: p.price,
-        category: p.category,
+        title: p?.itemname,
+        Description: p?.item_desc,
+        About_item: p?.item_about,
+        quantity: p?.quantity,
+        price: p?.price,
+        category: p?.category,
       });
 
     } catch (error) {
@@ -105,7 +102,7 @@ function EditProduct() {
       }
 
       const res = await axios.put(
-        `http://127.0.0.1:5000/api/admin/update-item/${id}`,
+        `/api/admin/update-item/${id}`,
         data,
         {
           withCredentials: true
