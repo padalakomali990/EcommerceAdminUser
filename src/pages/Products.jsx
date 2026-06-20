@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../store/Slices/ProductSlice";
 import axios from "axios";
+
 function Products() {
 
   const { items, loading, error } = useSelector(
@@ -9,23 +10,52 @@ function Products() {
   );
 
   const dispatch = useDispatch();
-
   const [search, setSearch] = useState("");
+
+  // BUY NOW FUNCTION
+  const handleBuyNow = async (itemid) => {
+    try {
+      const response = await axios.post(
+        "/api/buy_now",
+        {
+          itemid: itemid,
+          quantity: 1
+        },
+        {
+          withCredentials: true   // important for Flask session
+        }
+      );
+
+      console.log(response.data);
+
+      if (response.data.status === "success") {
+        alert("Buy now successful");
+
+        // later you can navigate to payment page
+        // navigate("/payment");
+      }
+
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
 
   // FILTER PRODUCTS
   const filteredProducts = useMemo(() => {
-
     return items.filter((s) =>
       s.category.toLowerCase().includes(
         search.toLowerCase()
       )
     );
-
   }, [items, search]);
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   if (error) {
     return <h2>{error}</h2>;
@@ -141,7 +171,6 @@ function Products() {
         </h1>
 
         {/* SEARCH */}
-
         <div className="search-box">
           <input
             type="text"
@@ -153,7 +182,6 @@ function Products() {
         </div>
 
         {/* PRODUCTS */}
-
         <div className="container">
           <div className="row g-4">
 
@@ -177,7 +205,7 @@ function Products() {
                       {v.category}
                     </p>
 
-                    <p className="product-names">
+                    <p className="product-name">
                       {v.itemname}
                     </p>
 
@@ -188,6 +216,14 @@ function Products() {
                     <p className="quantity">
                       Quantity: {v.quantity}
                     </p>
+
+                    {/* BUY NOW BUTTON */}
+                    <button
+                      className="btn btn-primary mt-2"
+                      onClick={() => handleBuyNow(v.itemid)}
+                    >
+                      Buy Now
+                    </button>
 
                   </div>
 

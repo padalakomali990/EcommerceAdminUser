@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api";
 import { Link, useNavigate } from "react-router-dom";
 
 function AdminProducts() {
@@ -11,17 +11,14 @@ function AdminProducts() {
     try {
 
       const res = await axios.get(
-        "http://127.0.0.1:5000/api/admin/items",
-        {
-          withCredentials: true
-        }
+        "/api/admin/items",        
       );
 
       setProducts(res.data.products || res.data);
 
     } catch (error) {
       console.log(error.response?.data || error.message);
-      navigate("/login");
+      // navigate("/login");
     }
   }
 
