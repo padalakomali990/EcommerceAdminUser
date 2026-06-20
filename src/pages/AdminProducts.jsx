@@ -11,7 +11,7 @@ function AdminProducts() {
     try {
 
       const res = await axios.get(
-        "/api/admin/items",        
+        "/api/admin/items",
       );
 
       setProducts(res.data.products || res.data);
@@ -26,10 +26,7 @@ function AdminProducts() {
     try {
 
       const res = await axios.delete(
-        `http://127.0.0.1:5000/api/admin/delete-item/${id}`,
-        {
-          withCredentials: true
-        }
+        `/api/admin/delete-item/${id}`,
       );
 
       alert(res.data.message);
@@ -47,7 +44,7 @@ function AdminProducts() {
 
   return (
     <>
-      
+
 
       {/* CUSTOM STYLE */}
       <style>{`
@@ -153,18 +150,18 @@ function AdminProducts() {
           <div className="row g-4">
 
             {products.map((item) => (
-              
+
               <div
                 className="col-12 col-sm-6 col-lg-4"
                 key={item.itemid}
               >
                 <div className="product-card">
 
-<img
-  src={item.image}
-  alt={item.itemname}
-  className="product-img"
-/>
+                  <img
+                    src={item.image}
+                    alt={item.itemname}
+                    className="product-img"
+                  />
                   <div className="product-body">
 
                     <h2 className="product-title">
