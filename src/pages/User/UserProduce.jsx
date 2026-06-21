@@ -39,8 +39,18 @@ function UserProduce() {
 
   async function searchProducts() {
 
+    // if (!searchTerm.trim()) {
+    //   fetchProducts();   // if empty, show all products again
+    //   return;
+    // }
     if (!searchTerm.trim()) {
-      fetchProducts();   // if empty, show all products again
+
+      if (activeCategory === "All") {
+        fetchProducts();
+      } else {
+        fetchCategoryProducts(activeCategory);
+      }
+
       return;
     }
 
@@ -77,29 +87,87 @@ function UserProduce() {
     }
   }
 
+  async function fetchCategoryProducts(category) {
+
+    // if All → old API
+    if (category === "All") {
+      fetchProducts();
+      return;
+    }
+
+    try {
+
+      setLoading(true);
+
+      const res = await axios.get(
+        `/api/category/${category}`
+      );
+
+      console.log("CATEGORY RESPONSE =", res.data);
+
+      if (res.data.status === "success") {
+
+        setFiltered(res.data.products);
+
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      setFiltered([]);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to load category products"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  }
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const cat = params.get("category");
-    if (cat) {
-      setActiveCategory(cat);
-      setFiltered(products.filter(p => p.category === cat));
-    } else {
-      setActiveCategory("All");
-      setFiltered(products);
-    }
-  }, [location.search, products]);
 
+    const params = new URLSearchParams(
+      location.search
+    );
+
+    const cat = params.get("category");
+
+    if (cat) {
+
+      setActiveCategory(cat);
+
+      fetchCategoryProducts(cat);
+
+    } else {
+
+      setActiveCategory("All");
+
+      fetchProducts();
+
+    }
+
+  }, [location.search]);
+
+  // function filterByCategory(val) {
+  //   setActiveCategory(val);
+  //   if (val === "All") {
+  //     setFiltered(products);
+  //   } else {
+  //     setFiltered(products.filter(p => p.category === val));
+  //   }
+  // }
   function filterByCategory(val) {
     setActiveCategory(val);
-    if (val === "All") {
-      setFiltered(products);
-    } else {
-      setFiltered(products.filter(p => p.category === val));
-    }
+    fetchCategoryProducts(val);
   }
 
   async function addToCart(itemid) {
