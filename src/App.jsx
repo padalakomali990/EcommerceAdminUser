@@ -22,6 +22,8 @@ import Payment from './pages/User/Payment'
 import MyOrders from "./pages/User/MyOrders";
 import OrderDetails from "./pages/User/OrderDetails";
 import ProductDescription from './pages/ProductDescription'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 
 function App() {
@@ -64,6 +66,16 @@ function App() {
         <Route
           path="/login"
           element={<Login />}
+        />
+
+        <Route
+          path="/forgot-password"
+          element={<ForgotPassword />}
+        />
+
+        <Route
+          path="/reset-password/:token"
+          element={<ResetPassword />}
         />
 
         <Route
@@ -127,7 +139,6 @@ function App() {
           path="*"
           element={<PageNotFound />} />
         {/* user */}
-
 
         <Route
           path="/user-dashboard"
