@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../store/Slices/ProductSlice";
-import axios from "axios";
+import axios from "../api";
 
 function Products() {
 
@@ -21,9 +21,6 @@ function Products() {
           itemid: itemid,
           quantity: 1
         },
-        {
-          withCredentials: true   // important for Flask session
-        }
       );
 
       console.log(response.data);

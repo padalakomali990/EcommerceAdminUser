@@ -438,7 +438,7 @@ function UserProduce() {
               background: "#0ea5e9",
               color: "white",
               border: "none",
-              borderRadius: "10px" 
+              borderRadius: "10px"
             }}
           >
             {searchLoading ? "Searching..." : "Search"}
@@ -469,6 +469,8 @@ function UserProduce() {
                     <img
                       src={product.image}
                       alt={product.itemname}
+                      onClick={() => navigate(`/product/${product.itemid}`)}
+                      style={{ cursor: "pointer" }}
                     />
                     {product.category && (
                       <span className="up-category-tag">
@@ -478,7 +480,12 @@ function UserProduce() {
                   </div>
 
                   <div className="up-card-body">
-                    <h5 className="up-item-name" title={product.itemname}>
+                    <h5
+                      className="up-item-name"
+                      title={product.itemname}
+                      onClick={() => navigate(`/product/${product.itemid}`)}
+                      style={{ cursor: "pointer" }}
+                    >
                       {product.itemname}
                     </h5>
 

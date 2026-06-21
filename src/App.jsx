@@ -21,6 +21,7 @@ import UserProduce from './pages/User/UserProduce'
 import Payment from './pages/User/Payment'
 import MyOrders from "./pages/User/MyOrders";
 import OrderDetails from "./pages/User/OrderDetails";
+import ProductDescription from './pages/ProductDescription'
 
 
 function App() {
@@ -180,6 +181,13 @@ function App() {
               <OrderDetails />
             </UserProtectedRoute>
           }
+        />
+
+        <Route
+          path="/product/:itemid"
+          element={<UserProtectedRoute>
+            <ProductDescription />
+          </UserProtectedRoute>}
         />
       </Routes>
 
