@@ -24,6 +24,8 @@ import OrderDetails from "./pages/User/OrderDetails";
 import ProductDescription from './pages/ProductDescription'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import AdminForgotPassword from './pages/AdminForgotPassword'
+import AdminResetPassword from './pages/AdminResetPassword'
 
 
 function App() {
@@ -76,6 +78,16 @@ function App() {
         <Route
           path="/reset-password/:token"
           element={<ResetPassword />}
+        />
+
+        <Route
+          path="/admin-forgot-password"
+          element={<AdminForgotPassword />}
+        />
+
+        <Route
+          path="/admin-reset-password/:token"
+          element={<AdminResetPassword />}
         />
 
         <Route

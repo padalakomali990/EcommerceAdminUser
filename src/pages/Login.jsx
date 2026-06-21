@@ -338,11 +338,15 @@ function Login() {
           </form>
 
           <div style={{ textAlign: "right", marginTop: "8px" }}>
-            {role === "user" && (
-              <Link to="/forgot-password">
-                Forgot Password?
-              </Link>
-            )}
+            <Link
+              to={
+                role === "admin"
+                  ? "/admin-forgot-password"
+                  : "/forgot-password"
+              }
+            >
+              Forgot Password?
+            </Link>
           </div>
 
           <div className="register-link">
