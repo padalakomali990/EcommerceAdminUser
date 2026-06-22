@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../api";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -29,8 +29,8 @@ function Register() {
   });
   const url =
     role === "admin"
-      ? "https://ecomflask.duckdns.org/api/admin/register"
-      : "https://ecomflask.duckdns.org/api/user/register";
+      ? "/api/admin/register"
+      : "/api/user/register";
 
   const payload =
     role === "admin"
@@ -83,8 +83,8 @@ function Register() {
   try {
     const url =
       role === "admin"
-        ? " http://127.0.0.1:5000/api/admin/register"
-        : " http://127.0.0.1:5000/api/user/register";
+        ? " /api/admin/register"
+        : " /api/user/register";
 
     const payload =
       role === "admin"

@@ -1,3 +1,4 @@
+import axios from "../api";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
@@ -26,11 +27,8 @@ useEffect(() => {
     }
 
     if (user) {
-      await fetch(
-        "http://127.0.0.1:5000/api/user/logout",
-        {
-          credentials: "include"
-        }
+      await axios(
+        "/api/user/logout",
       );
 
       localStorage.removeItem("user");
