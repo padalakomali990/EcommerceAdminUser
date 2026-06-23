@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'http://127.0.0.1:5000',
+        // target: 'http://13.60.221.19:5000',
         target: 'https://kcommerce.duckdns.org/',
         changeOrigin: true,
         secure: false
