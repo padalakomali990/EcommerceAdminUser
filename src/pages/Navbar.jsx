@@ -27,7 +27,7 @@ useEffect(() => {
     }
 
     if (user) {
-      await axios(
+      await axios.post(
         "/api/user/logout",
       );
 
