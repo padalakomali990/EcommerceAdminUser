@@ -104,9 +104,6 @@ function EditProduct() {
       const res = await axios.put(
         `/api/admin/update-item/${id}`,
         data,
-        {
-          withCredentials: true
-        }
       );
 
       // SUCCESS TOAST

@@ -60,9 +60,6 @@ function Login() {
       const res = await axios.post(
         url,
         payload,
-        {
-          withCredentials: true
-        }
       );
 
       console.log("LOGIN RESPONSE =", res.data);

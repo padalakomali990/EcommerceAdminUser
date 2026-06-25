@@ -13,9 +13,6 @@ function SingleProduct() {
 
       const res = await axios.get(
         `/api/admin/item/${id}`,
-        {
-          withCredentials: true
-        }
       );
 
       setProduct(res.data.products);
