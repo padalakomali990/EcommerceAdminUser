@@ -104,6 +104,11 @@ function EditProduct() {
       const res = await axios.put(
         `/api/admin/update-item/${id}`,
         data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+        }
       );
 
       // SUCCESS TOAST
